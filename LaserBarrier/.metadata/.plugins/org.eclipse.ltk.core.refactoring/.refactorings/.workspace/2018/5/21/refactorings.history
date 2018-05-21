@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;LaserBarrier/LaserBarrier Debug.cfg&apos;" deleteContents="false" description="Delete resource &apos;LaserBarrier/LaserBarrier Debug.cfg&apos;" element1="/LaserBarrier/LaserBarrier Debug.cfg" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1526891712284"/>
+</session>

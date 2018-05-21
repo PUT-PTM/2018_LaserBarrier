@@ -1,0 +1,21 @@
+10:32:38 **** Incremental Build of configuration Debug for project LaserBarrier ****
+make -j3 all 
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+
+10:32:38 Build Finished (took 87ms)
+
+10:32:38 **** Incremental Build of configuration Release for project LaserBarrier ****
+make -j3 all 
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+10:32:45 **** Incremental Build of configuration Debug for project LaserBarrier ****
+make -j3 all 
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+10:34:03 **** Incremental Build of configuration Debug for project LaserBarrier ****
+make -j3 all 
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+10:34:31 **** Incremental Build of configuration Debug for project LaserBarrier ****
+make -j3 all 
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+10:35:41 **** Incremental Build of configuration Debug for project LaserBarrier ****
+make -j3 all 
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun

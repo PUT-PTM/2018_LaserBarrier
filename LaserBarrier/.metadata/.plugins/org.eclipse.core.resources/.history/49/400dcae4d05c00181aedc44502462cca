@@ -1,0 +1,42 @@
+/**
+  ******************************************************************************
+  * @file    main.c
+  * @author  Ac6
+  * @version V1.0
+  * @date    01-December-2013
+  * @brief   Default main function.
+  ******************************************************************************
+*/
+
+#include "stm32f4xx.h"
+#include "stm32f4_discovery.h"
+
+/*
+    RxD PA2 Linia TxD USART2
+    Txd PA3 Linia RxD USART2
+*/
+
+RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+// wlaczenie taktowania USART2
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+
+// konfiguracja linii Rx i Tx
+void USART2_GPIO_Configuration(){
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	// ustawienie funkcji alternatywnej dla pinów (USART)
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART3);
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART3);
+}
+
+int main(void)
+{
+
+	for(;;);
+}
