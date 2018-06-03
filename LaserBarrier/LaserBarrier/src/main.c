@@ -10,136 +10,138 @@
 
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
-#define RCV_BUFFER_SIZE 40
 
-/*
-    RxD PA2 Linia TxD USART2
-    Txd PA3 Linia RxD USART2
-*/
+int ADC_Result, laser_Threshold=3500;
 
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);
-RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+//PC10 RX
+//PC11 TX
 
-uint32_t rcvIndex = 0;
-uint8_t rcvMessageFlag = 0;
-uint8_t rcvMessageSize = 0;
 
-char rcvBuffer[RCV_BUFFER_SIZE];
-char rcvMessage[RCV_BUFFER_SIZE];
+void USART3_IRQHandler(void)
+{
 
-// konfiguracja linii Rx i Tx
-void USART2_GPIO_Configuration(){
+}
+
+void PR_init(){
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD , ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
 	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	GPIO_InitTypeDef GPIO_InitStructure1;
+	GPIO_InitStructure1.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 ;
+	GPIO_InitStructure1.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure1.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure1.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure1.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOD, &GPIO_InitStructure1);
+
+	//konfiguracja wszystkich ADC
+	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
+	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+	ADC_CommonInit(&ADC_CommonInitStructure);
+
+
+	//konfiguracja danego pretwornika
+	ADC_InitTypeDef ADC_InitStructure;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+	ADC_InitStructure.ADC_ScanConvMode = DISABLE;
+	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
+	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_NbrOfConversion = 1;
+	ADC_Init(ADC1, &ADC_InitStructure);
+
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_84Cycles);
+
+	ADC_Cmd(ADC1, ENABLE);
+
+}
+
+void BT_init() {
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
+	GPIO_PinAFConfig(GPIOC, GPIO_PinSource10, GPIO_AF_USART3);
+	GPIO_PinAFConfig(GPIOC, GPIO_PinSource11, GPIO_AF_USART3);
+
+	USART_InitTypeDef USART_InitStructure;
+	USART_InitStructure.USART_BaudRate = 9600;
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Parity = USART_Parity_No;
+	USART_InitStructure.USART_HardwareFlowControl =
+	USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+	USART_Init(USART3, &USART_InitStructure);
+
+	USART_Cmd(USART3, ENABLE);
+
+	NVIC_InitTypeDef NVIC_InitStructure;
+	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	NVIC_EnableIRQ(USART3_IRQn);
 }
 
-void USART2_Init(){
-	USART_InitTypeDef UsartStruct;
-	UsartStruct.USART_BaudRate=9600;
-	UsartStruct.USART_HardwareFlowControl=USART_HardwareFlowControl_None;
-	UsartStruct.USART_Mode=USART_Mode_Tx | USART_Mode_Rx;
-	UsartStruct.USART_Parity=USART_Parity_No;
-	UsartStruct.USART_StopBits=USART_StopBits_1;
-	UsartStruct.USART_WordLength=USART_WordLength_8b;
-	USART_Init(USART2,&UsartStruct);
-	USART_Cmd(USART2,ENABLE);
+void BT_send(char * tab) {
+    while(*tab)
+        BT_sendChar(*tab++);
 }
 
-void NVIC_Init(){
-	NVIC_InitTypeDef NVICStruct;
-	NVICStruct.NVIC_IRQChannel=USART2_IRQn;
-	NVICStruct.NVIC_IRQChannelCmd=ENABLE;
-	NVICStruct.NVIC_IRQChannelPreemptionPriority=1;
-	NVICStruct.NVIC_IRQChannelSubPriority=1;
-	NVIC_Init(&NVICStruct);
-	USART_ITConfig(USART2,USART_IT_RXNE,ENABLE);
+void BT_sendChar(char c){
+    while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
+    USART_SendData(USART3, c);
 }
-
-void USART2_IRQHandler(void)
-{
-	if(USART_GetITStatus(USART2,USART_IT_RXNE)==SET)
-	{
-		if(USART_GetFlagStatus(USART2,USART_IT_RXNE)==SET)
-		{
-			rcvBuffer[rcvIndex]=USART_ReceiveData(USART2);
-
-			//Buffer full or end of current message
-			if(rcvIndex+1>=RCV_BUFFER_SIZE || rcvBuffer[rcvIndex]=='\n')
-			{
-				//Placing message in message buffer - setting flag
-				rcvMessageFlag=1;
-				uint32_t i;
-				for(i=0;i<RCV_BUFFER_SIZE;i++)
-				{
-					if(i<=rcvIndex)
-					{
-						rcvMessage[i]=rcvBuffer[i];
-					}
-					else
-					{
-						rcvMessage[i]=0x00;
-					}
-				}
-
-				//Clear receive buffer
-				for(i=0;i<RCV_BUFFER_SIZE;i++)
-				{
-					rcvBuffer[i]=0x00;
-				}
-				rcvMessageSize=rcvIndex;
-				rcvIndex=0;
-			}
-			else
-			{
-				rcvIndex++;
-			}
-		}
-		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
-	}
-}
-
-void initBluetooth(void)
-{
-	USART2_GPIO_Configuration();
-	USART2_Init();
-	NVIC_Init();
-}
-
-void sendBluetoothChar(char item)
-{
-	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET){}
-	USART_SendData(USART2, (uint16_t)item);
-}
-
-void sendBluetoothString(char* items)
-{
-	/*This works because strings end with \0 (null)*/
-	while(*items)
-	{
-		sendBluetoothChar(*items);
-		items++;
-	}
-}
-
 
 int main(void)
 {
-	initBluetooth();
-while(1)
-{
-  if(rcvMessageFlag)
-  {
-	  //Respond to the message
-	  sendBluetoothString("Message Received!\r\n");
-	  rcvMessageFlag=0;
-  }
+	PR_init();
+	BT_init();
+//    for(;;){
+//        BT_send("test\r\n");
+//    }
+
+    for(;;)
+    	{
+    		ADC_SoftwareStartConv(ADC1);
+    		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
+    		ADC_Result = ADC_GetConversionValue(ADC1);
+
+    		if (ADC_Result > laser_Threshold) {
+//    			GPIO_SetBits(GPIOD,GPIO_Pin_14);
+//    			GPIO_ResetBits(GPIOD,GPIO_Pin_15);
+    		}
+    		else {
+//    			GPIO_SetBits(GPIOD,GPIO_Pin_15);
+//    			GPIO_ResetBits(GPIOD,GPIO_Pin_14);
+    			//wysłanie czasu przez BT
+    			BT_send("start\r\n");
+    		}
+
+    	}
 }
-}
+
+
+
