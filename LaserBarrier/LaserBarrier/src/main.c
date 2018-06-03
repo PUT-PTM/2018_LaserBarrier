@@ -132,16 +132,14 @@ int main(void)
     		if (ADC_Result > laser_Threshold) {
 //    			GPIO_SetBits(GPIOD,GPIO_Pin_14);
 //    			GPIO_ResetBits(GPIOD,GPIO_Pin_15);
+			BT_send("brak\r\n");
     		}
     		else {
 //    			GPIO_SetBits(GPIOD,GPIO_Pin_15);
 //    			GPIO_ResetBits(GPIOD,GPIO_Pin_14);
-    			//wysłanie czasu przez BT
+    			//sygnalizacja zasłonięcia fotorezystora przez obiekt i wysłanie przez BT do apki
     			BT_send("start\r\n");
     		}
 
     	}
 }
-
-
-
