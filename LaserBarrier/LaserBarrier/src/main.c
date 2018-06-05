@@ -1,21 +1,9 @@
-/**
-  ******************************************************************************
-  * @file    main.c
-  * @author  Ac6
-  * @version V1.0
-  * @date    01-December-2013
-  * @brief   Default main function.
-  ******************************************************************************
-*/
-
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
 
 int ADC_Result, laser_Threshold=3500;
-
-//PC10 RX
-//PC11 TX
-
+int id = 12345;
+int counter = 0;
 
 void USART3_IRQHandler(void)
 {
@@ -119,9 +107,6 @@ int main(void)
 {
 	PR_init();
 	BT_init();
-//    for(;;){
-//        BT_send("test\r\n");
-//    }
 
     for(;;)
     	{
@@ -132,13 +117,14 @@ int main(void)
     		if (ADC_Result > laser_Threshold) {
 //    			GPIO_SetBits(GPIOD,GPIO_Pin_14);
 //    			GPIO_ResetBits(GPIOD,GPIO_Pin_15);
-			BT_send("brak\r\n");
+    			BT_send("brak\r\n");
     		}
     		else {
 //    			GPIO_SetBits(GPIOD,GPIO_Pin_15);
 //    			GPIO_ResetBits(GPIOD,GPIO_Pin_14);
     			//sygnalizacja zasłonięcia fotorezystora przez obiekt i wysłanie przez BT do apki
-    			BT_send("start\r\n");
+    			counter++;
+    			BT_send("%s,%s",start\r\n", id, counter);
     		}
 
     	}
