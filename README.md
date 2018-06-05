@@ -6,7 +6,7 @@
 
 ## Tools
 
-| STM32F4 DISCOVERY | TM1637 LED Display | Analog Microphone | RGB LED |
+| STM32F4 DISCOVERY |  |  |  |
 | --- | --- | --- | --- |
 
 ## How to run
