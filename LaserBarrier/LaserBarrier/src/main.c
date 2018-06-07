@@ -1,13 +1,30 @@
+/**
+  ******************************************************************************
+  * @file    main.c
+  * @author  Ac6
+  * @version V1.0
+  * @date    01-December-2013
+  * @brief   Default main function.
+  ******************************************************************************
+*/
+
+
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
+#include <string.h>
 
 int ADC_Result, laser_Threshold=3500;
 int id = 12345;
 int counter = 0;
+int measure = 1;
 
 void USART3_IRQHandler(void)
 {
-
+	if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
+		if(USART3->DR == "PC#Measure"){
+			measure = 1;
+		}
+	}
 }
 
 void PR_init(){
@@ -93,7 +110,7 @@ void BT_init() {
 	NVIC_EnableIRQ(USART3_IRQn);
 }
 
-void BT_send(char * tab) {
+void BT_send(char *tab) {
     while(*tab)
         BT_sendChar(*tab++);
 }
@@ -114,17 +131,10 @@ int main(void)
     		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
     		ADC_Result = ADC_GetConversionValue(ADC1);
 
-    		if (ADC_Result > laser_Threshold) {
-//    			GPIO_SetBits(GPIOD,GPIO_Pin_14);
-//    			GPIO_ResetBits(GPIOD,GPIO_Pin_15);
-    			BT_send("brak\r\n");
-    		}
-    		else {
-//    			GPIO_SetBits(GPIOD,GPIO_Pin_15);
-//    			GPIO_ResetBits(GPIOD,GPIO_Pin_14);
-    			//sygnalizacja zasłonięcia fotorezystora przez obiekt i wysłanie przez BT do apki
+    		if (ADC_Result < laser_Threshold && measer == 1) {
+    			BT_send("test");
     			counter++;
-    			BT_send("%s,%s",start\r\n", id, counter);
+    			measure = 0;
     		}
 
     	}
