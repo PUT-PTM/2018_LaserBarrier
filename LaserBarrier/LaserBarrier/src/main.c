@@ -132,7 +132,19 @@ int main(void)
     		ADC_Result = ADC_GetConversionValue(ADC1);
 
     		if (ADC_Result < laser_Threshold && measer == 1) {
-    			BT_send("test");
+                char message[15];
+        		char id_str[15];
+        		char counter_str[15];
+        
+        		snprintf(id_str, 10, "%d", id);
+        		snprintf(counter_str, 10, "%d", counter);
+        
+        		strcat(message, id_str);
+        		strcat(message, "#start#");
+        		strcat(message, counter_str);
+        		strcat(message, "\r\n");
+                
+    			BT_send(message);
     			counter++;
     			measure = 0;
     		}
