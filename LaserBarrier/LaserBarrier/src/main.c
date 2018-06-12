@@ -12,7 +12,8 @@
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
 #include <string.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 int ADC_Result, laser_Threshold=3500;
 int id = 12345;
 int counter = 0;
@@ -21,7 +22,7 @@ int measure = 1;
 void USART3_IRQHandler(void)
 {
 	if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
-		if(USART3->DR == "PC#Measure"){
+		if(USART3->DR == 'R'){
 			measure = 1;
 		}
 	}
@@ -114,7 +115,6 @@ void BT_send(char *tab) {
     while(*tab)
         BT_sendChar(*tab++);
 }
-
 void BT_sendChar(char c){
     while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
     USART_SendData(USART3, c);
@@ -131,20 +131,10 @@ int main(void)
     		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
     		ADC_Result = ADC_GetConversionValue(ADC1);
 
-    		if (ADC_Result < laser_Threshold && measer == 1) {
-                char counter_str[15];
-                char *message = malloc(strlen(counter_str));
-
-                snprintf(counter_str, 10, "%d", counter);
-
-                strcat(message, "1#start#");
-                strcat(message, counter_str);
-                strcat(message, "\r\n");
-                printf(message);
-                
-    			BT_send(message);
-    			counter++;
-    			measure = 0;
+    		if (ADC_Result < laser_Threshold && measure == 1) {
+    			BT_send("STM2;s\r\n");
+                counter++;
+                measure = 0;
     		}
 
     	}
