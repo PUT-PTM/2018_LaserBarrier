@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ADC_Result, laser_Threshold;
+int ADC_Result, laser_Threshold;//=3500;
 int id = 12345;
 int counter = 0;
 int measure = 1;

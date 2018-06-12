@@ -1,0 +1,15 @@
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\bin\Debug\TimeMeasurmentApp.exe.config
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\bin\Debug\TimeMeasurmentApp.exe
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\bin\Debug\TimeMeasurmentApp.pdb
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.csprojResolveAssemblyReference.cache
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\MainWindow.g.cs
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\App.g.cs
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp_MarkupCompile.cache
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp_MarkupCompile.lref
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\MainWindow.baml
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.g.resources
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.Properties.Resources.resources
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.csproj.GenerateResource.cache
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.csproj.CoreCompileInputs.cache
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.exe
+C:\Users\msciborski\source\repos\TimeMeasurmentApp\TimeMeasurmentApp\obj\Debug\TimeMeasurmentApp.pdb

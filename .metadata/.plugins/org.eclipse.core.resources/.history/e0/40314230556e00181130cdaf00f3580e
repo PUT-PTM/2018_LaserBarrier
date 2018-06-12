@@ -3,8 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-int ADC_Result, laser_Threshold;
+int ADC_Result, laser_Threshold;//=3500;
 int id = 12345;
 int counter = 0;
 int measure = 1;
@@ -18,7 +17,7 @@ void USART3_IRQHandler(void)
     }
 }
 
-void PR_init() {
+void PR_init(){
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD , ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
@@ -45,6 +44,7 @@ void PR_init() {
     ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
     ADC_CommonInit(&ADC_CommonInitStructure);
 
+
     //konfiguracja danego pretwornika
     ADC_InitTypeDef ADC_InitStructure;
     ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
@@ -59,6 +59,7 @@ void PR_init() {
     ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_84Cycles);
 
     ADC_Cmd(ADC1, ENABLE);
+
 }
 
 void BT_init() {
@@ -103,42 +104,54 @@ void BT_send(char *tab) {
     while(*tab)
         BT_sendChar(*tab++);
 }
-
-void BT_sendChar(char c) {
+void BT_sendChar(char c){
     while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
     USART_SendData(USART3, c);
 }
 
-int average_light() {
+int average_light()
+{
     GPIO_SetBits(GPIOD,GPIO_Pin_14);
     GPIO_ResetBits(GPIOD,GPIO_Pin_15);
     int divider=300000;
     unsigned long int sum = 0;
-    for(int i=0;i<divider;i++) {
+    for(int i=0;i<divider;i++)
+    {
         ADC_SoftwareStartConv(ADC1);
         while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
         ADC_Result = ADC_GetConversionValue(ADC1);
         sum += ADC_Result;
+        //for(int i=0;i<100000;i++);
     }
     GPIO_SetBits(GPIOD,GPIO_Pin_15);
     GPIO_ResetBits(GPIOD,GPIO_Pin_14);
     return sum/divider;
 }
 
-int main(void) {
+int main(void)
+{
     PR_init();
     BT_init();
 
     laser_Threshold =  average_light() - 250;
 
-    for(;;) {
+    for(;;)
+        {
             ADC_SoftwareStartConv(ADC1);
             while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
             ADC_Result = ADC_GetConversionValue(ADC1);
+
             if (ADC_Result < laser_Threshold && measure == 1) {
-                BT_send("STM2;e;s\r\n");
+                BT_send("STM1;s\r\n");
                 counter++;
                 measure = 0;
             }
+            //DO TESTU PONIŻEJ NA ODWRÓT
+            /*if (ADC_Result > laser_Threshold+500 && measure == 1) {
+                BT_send("STM1;s\r\n");
+                counter++;
+                measure = 0;
+            }*/
+
         }
 }
