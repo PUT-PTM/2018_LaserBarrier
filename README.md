@@ -2,7 +2,7 @@
 
 ## Overview
 
-Our goal was to create a console application and a pair of laser gates used for measuring time it takes an an object to get from start (first gate) to finish (second gate). Each gate consists of a Bluetooth module and a laser diode pointed at photoresistor attached to the microcontroller. When the object passes the laser beam of the first gate, the first microcontroller sends an information to the application via Bluetooth. When the object reaches the finish gate, the same thing happens and the application calculates the time elapsed between the two signals.
+Our goal was to create a desktop application and a pair of laser gates used for measuring time it takes an an object to get from start (first gate) to finish (second gate). Each gate consists of a Bluetooth module and a laser diode pointed at photoresistor attached to the microcontroller. When the object passes the laser beam of the first gate, the first microcontroller sends an information to the application via Bluetooth. When the object reaches the finish gate, the same thing happens and the application calculates the time elapsed between the two signals.
 
 ## Description 
 
@@ -33,11 +33,11 @@ IN -> PA1
 ### Steps
 
 Download the code, build and run it on System WorkBench for STM32 (v. 2.2.0) or other compatible STM32 compiler.\
-Connect all pins with schema.
+Connect all pins according to the instructions above.
 
 ## How to compile
 
-There is no need to change anything in source code, compile as is.
+There is no need to change anything in the source code, it's ready for compilation.
 
 ## Future improvements
 
