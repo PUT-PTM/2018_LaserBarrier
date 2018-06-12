@@ -2,7 +2,8 @@
 
 ## Overview
 
-Our goal was to create a console application and a pair of laser gates used for measuring time in which an object gets from start (first gate) to finish (second gate). Each gate consists of a Bluetooth module and a laser diode pointed at photoresistor attached to the microcontroler
+Our goal was to create a console application and a pair of laser gates used for measuring time it takes an an object to get from start (first gate) to finish (second gate). Each gate consists of a Bluetooth module and a laser diode pointed at photoresistor attached to the microcontroller. When the object passes the laser beam of the first gate, the first microcontroller sends an information to the application via Bluetooth. When the object reaches the finish gate, the same thing happens and the application calculates the time elapsed between the two signals.
+
 ## Description 
 
 ## Tools
