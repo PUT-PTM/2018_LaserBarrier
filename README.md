@@ -27,7 +27,8 @@ TX -> PC11
 
 #### Photoresistor with resistor
 GND -> GND\
-VCC ->
+VCC -> VCC\
+IN -> PA1
 
 ### Steps
 
@@ -48,7 +49,7 @@ There is no need to change anything in source code, compile as is.
 - **[MIT license](http://opensource.org/licenses/mit-license.php)**
 
 ## Credits
-Jakub Smierzchalski
+Jakub Smierzchalski\
 Michał Ściborski [msciborski](https://github.com/msciborski)\
 Kamila Urbaniak - [camilqa](https://github.com/camilqa)
 
