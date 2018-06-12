@@ -27,7 +27,8 @@ TX -> PC11
 
 #### Photoresistor with resistor
 GND -> GND\
-VCC ->
+VCC -> VCC\
+IN -> PA1
 
 ### Steps
 
