@@ -32,8 +32,8 @@ IN -> PA1
 
 ### Steps
 
-Download the code, build and run it on System WorkBench for STM32 (v. 2.2.0) or other compatible STM32 compiler.\
-Connect all pins according to the instructions above.
+Connect all pins according to the instructions above.\
+Download the code, build and run it on System WorkBench for STM32 (v. 2.2.0) or any other compatible STM32 compiler.
 
 ## How to compile
 
