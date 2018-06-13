@@ -6,20 +6,20 @@ Our goal was to create a pair of laser gates used for measuring time it takes an
 
 ## Description 
 
-Each gate consists of a laser diode pointed at photoresistor connected to the microcontroller and a Bluetooth module. When the program is run on the microcontroller, it first finds out what the average light level at the photoresistor is and, based on that data, sets a threshold. When light level drops below that threshold (that is when an object crosses the laser beam) **WYSYŁA SYGNAŁ DO APPKI** 
+Each gate consists of a laser diode pointed at photoresistor connected to the microcontroller and a Bluetooth module. When the program is run on the microcontroller, it first finds out what the average light level at the photoresistor is and, based on that data, sets a threshold. When light level drops below that threshold (that is when an object crosses the laser beam) microcontroller sends a signal to the application via Bluetooth. The application uses events to read current time at the moment of message arrivel at COM port. After receiving message from the microcontroller marked as the starting point, the application waits for a message from the end gate. When the message from the second microcontroller arrives (both gates work exactly the same), the time between those two alerts is calculated and displayed. 
 
 
 //When the object reaches the finish gate, the same thing happens and the application calculates the time elapsed between the two signals.
 
 ## Tools
 
-* System Workbench for STM32 do ...
-* Arduino or Hercules Setup Utility by HW-Group.com do ...
-* Visual Studio to ...
-* Microcontroller STM32F407VG DISCOVERY do ...
-* Bluetooth HC-06 ZS-040 module do ...
-* Red laser diode 5mW 5V do ...
-* Photoresistor 5-10kΩ GL5616 do ...
+* System Workbench for STM32\
+* Arduino or Hercules Setup Utility by HW-Group.com\
+* Visual Studio\
+* Microcontroller STM32F407VG DISCOVERY\
+* Bluetooth HC-06 ZS-040 module\
+* Red laser diode 5mW 5V\
+* Photoresistor 5-10kΩ GL5616\
 
 ## How to run
 
