@@ -27,7 +27,7 @@ VCC -> 3V\
 RX -> PC10\
 TX -> PC11
 
-#### Photoresistor with resistor
+#### Photoresistor with voltage devider
 GND -> GND\
 VCC -> VCC\
 IN -> PA1
