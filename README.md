@@ -10,13 +10,13 @@ Each gate consists of a laser diode pointed at photoresistor connected to the mi
 
 ## Tools
 
-* System Workbench for STM32\
-* Arduino or Hercules Setup Utility by HW-Group.com\
-* Visual Studio\
-* Microcontroller STM32F407VG DISCOVERY\
-* Bluetooth HC-06 ZS-040 module\
-* Red laser diode 5mW 5V\
-* Photoresistor 5-10kΩ GL5616\
+* System Workbench for STM32
+* Arduino or Hercules Setup Utility by HW-Group.com
+* Visual Studio
+* Microcontroller STM32F407VG DISCOVERY
+* Bluetooth HC-06 ZS-040 module
+* Red laser diode 5mW 5V
+* Photoresistor 5-10kΩ GL5616
 
 ## How to run
 
