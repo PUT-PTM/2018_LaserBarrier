@@ -2,9 +2,14 @@
 
 ## Overview
 
-Our goal was to create a desktop application and a pair of laser gates used for measuring time it takes an an object to get from start (first gate) to finish (second gate). Each gate consists of a Bluetooth module and a laser diode pointed at photoresistor attached to the microcontroller. When the object passes the laser beam of the first gate, the first microcontroller sends an information to the application via Bluetooth. When the object reaches the finish gate, the same thing happens and the application calculates the time elapsed between the two signals.
+Our goal was to create a pair of laser gates used for measuring time it takes an object to get from start (first gate) to finish (second gate). The results are then sent to the desktop application of our design and displayed.
 
 ## Description 
+
+Each gate consists of a laser diode pointed at photoresistor connected to the microcontroller and a Bluetooth module. When the program is run on the microcontroller, it first finds out what the average light level at the photoresistor is and, based on that data, sets a threshold. When light level drops below that threshold (that is when an object crosses the laser beam) **WYSYŁA SYGNAŁ DO APPKI** 
+
+
+//When the object reaches the finish gate, the same thing happens and the application calculates the time elapsed between the two signals.
 
 ## Tools
 
@@ -18,7 +23,7 @@ Our goal was to create a desktop application and a pair of laser gates used for 
 
 ## How to run
 
-### Wire connections
+### Wires connection
 #### Bluetooth module
 GND -> GND\
 VCC -> 3V\
